@@ -13,7 +13,7 @@
         }
 
         const createQuestionInfo = (base) => {
-            const randNum = !decPnt ? createRndNum(1000): createRndNum(99, 0, 100);
+            const randNum = createRndNum(1000);
             
             return { num: randNum.toString(base), base };
         }
@@ -22,8 +22,16 @@
             return Math.floor((Math.random() * max +min) * (pnt)) / pnt
         }
 
+        const convert = () => {
+            const num = prompt(`number: `);
+            const base = parseInt(prompt(`base: `));
+            const toBase = parseInt(prompt(`to: `));
+
+            alert(`${num} [${base}] -> \n ${convertBase(num, base, toBase)} [${toBase}]`)
+        }
+
         const convertBase = (num, fromBase, toBase) => {
-            const decimal = parseInt(num, fromBase);
+            const decimal = parseFloat(num, fromBase);
 
             return decimal.toString(toBase);
         }
@@ -35,7 +43,7 @@
             const questionInfo = createQuestionInfo(createRndNum(16, 1));
             const toBase = createRndNum(16,1);
 
-            const ans = convertBase(questionInfo.num, questionInfo.base, toBase)
+            const ans = parseInt(convertBase(questionInfo.num, questionInfo.base, toBase));
 
             const userAns = prompt(`${questionInfo.num} [${questionInfo.base}]  -> ${toBase}`);
             if (userAns == ans || userAns == ans.toUpperCase) {
@@ -49,6 +57,8 @@
 
 <body>
     <h1 onClick="createQuestion()">Click this to practice base conversion</h1>
+    <br/>
+    <h1 onClick="convert()">Convert into n-base</h1>
     <!-- 소수 활성화:<input type="checkbox" name="decimalPoint" id="enableDecPnt" onchange="chngDecPntSttng(this)"> -->
 </body>
 
