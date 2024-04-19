@@ -31,7 +31,7 @@
         }
 
         const convertBase = (num, fromBase, toBase) => {
-            const decimal = parseFloat(num, fromBase);
+            const decimal = (num % 1 != 0) ? parseFloat(num, fromBase): parseInt(num, fromBase);
 
             return decimal.toString(toBase);
         }
