@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Base Conversion</title>
     <script>
+        let decPnt = false;
+        
+        const chngDecPntSttng = (ckbx) => {
+            decPnt=ckbx.checked;
+        }
 
         const createQuestionInfo = (base) => {
             const randNum = createRndNum(1000);
@@ -22,33 +27,13 @@
             const base = parseInt(prompt(`base: `));
             const toBase = parseInt(prompt(`to: `));
 
-            alert(`${num} [${base}] -> \n ${converter(num, base, toBase)} [${toBase}]`)
+            alert(`${num} [${base}] -> \n ${convertBase(num, base, toBase)} [${toBase}]`)
         }
 
+        const convertBase = (num, fromBase, toBase) => {
+            const decimal = (num % 1 != 0) ? parseFloat(num, fromBase): parseInt(num, fromBase);
 
-        const converter = (input, fromBase, toBase) => {
-            const numArr = input.split("")
-            const intLen = numArr.indexOf(".");
-            if(intLen !== -1) numArr.splice(intLen, 1);
-            console.log(numArr)
-            const numDec = numArr.map((digit) => parseInt(digit, fromBase))
-            const numDecSum = numDec.reduce((accumulator, currentValue, i) => {
-                return accumulator + currentValue * fromBase ** (-(i-intLen+1));
-            }, 0);
-
-            const [intPart, decPart] = numDecSum.toString().split(".");
-            const res = reculsiveFunction(intPart, toBase, true) +"."+ reculsiveFunction("0."+decPart, toBase, false)
-            return {numDecSum, res}
-        }
-
-        const reculsiveFunction = (next, toBase, isInteger) => {
-            if(isInteger){
-                if((next / toBase) == 0) {return "";}
-                return reculsiveFunction(Math.floor(next / toBase), toBase, true) + (next%toBase).toString(toBase);
-            } else {
-                if(next%1 == 0) return "";
-                return  Math.floor(next * toBase).toString(toBase) + reculsiveFunction((next*toBase) %1, toBase,false)
-            }
+            return decimal.toString(toBase);
         }
 
         const createQuestion = () => {
@@ -58,7 +43,7 @@
             const questionInfo = createQuestionInfo(createRndNum(16, 1));
             const toBase = createRndNum(16,1);
 
-            const ans = converter(questionInfo.num, questionInfo.base, toBase);
+            const ans = convertBase(questionInfo.num, questionInfo.base, toBase);
 
             const userAns = prompt(`${questionInfo.num} [${questionInfo.base}]  -> ${toBase}`);
             if (userAns == ans || userAns == ans.toUpperCase) {
