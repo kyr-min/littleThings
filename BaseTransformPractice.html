@@ -43,7 +43,7 @@
             const questionInfo = createQuestionInfo(createRndNum(16, 1));
             const toBase = createRndNum(16,1);
 
-            const ans = convertBase(questionInfo.num, questionInfo.base, toBase);
+            const ans = parseInt(convertBase(questionInfo.num, questionInfo.base, toBase));
 
             const userAns = prompt(`${questionInfo.num} [${questionInfo.base}]  -> ${toBase}`);
             if (userAns == ans || userAns == ans.toUpperCase) {
